@@ -3,9 +3,9 @@ describe 'cgroups' do
   describe 'with default values for all parameters' do
     context 'on RedHat 6.4' do
       let(:facts) do
-        { :osfamily                   => 'RedHat',
-          :operatingsystemrelease     => '6.4',
-          :operatingsystemmajrelease  => '6',
+        { :osfamily                  => 'RedHat',
+          :operatingsystemrelease    => '6.4',
+          :operatingsystemmajrelease => '6',
         }
       end
 
@@ -50,42 +50,28 @@ mount {
 
     end
 
-    context 'on RedHat < 6.4 (5.2)' do
-      let(:facts) do
-        { :osfamily                   => 'RedHat',
-          :operatingsystemrelease     => '5.2',
-          :operatingsystemmajrelease  => '5',
-        }
-      end
+    ['5','7'].each do |release|
+      context "on EL #{release}" do
+        let(:facts) do
+          { :osfamily                  => 'RedHat',
+            :operatingsystemrelease    => "#{release}.0",
+            :operatingsystemmajrelease => release,
+          }
+        end
 
-      it 'should fail' do
-        expect {
-          should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
-      end
-
-    end
-
-    context 'on RedHat > 6.4 (7.0)' do
-      let(:facts) do
-        { :osfamily                   => 'RedHat',
-          :operatingsystemrelease     => '7.0',
-          :operatingsystemmajrelease  => '7',
-        }
-      end
-
-      it 'should fail' do
-        expect {
-          should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
+        it 'should fail' do
+          expect {
+            should contain_class('cgroups')
+          }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
+        end
       end
     end
 
     context 'on Suse 11.2' do
       let(:facts) do
-        { :osfamily                   => 'Suse',
-          :operatingsystemrelease     => '11.2',
-          :lsbmajdistrelease  => '11',
+        { :osfamily               => 'Suse',
+          :operatingsystemrelease => '11.2',
+          :lsbmajdistrelease      => '11',
         }
       end
 
@@ -133,7 +119,7 @@ mount {
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '11.1',
-          :lsbmajdistrelease  => '11',
+          :lsbmajdistrelease      => '11',
         }
       end
 
@@ -148,7 +134,7 @@ mount {
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '11.3',
-          :lsbmajdistrelease  => '11',
+          :lsbmajdistrelease      => '11',
         }
       end
 
@@ -197,9 +183,9 @@ mount {
     context 'on RedHat 6.4' do
       let(:params) { { :cgconfig_content => 'kalle is king hallelulja' } }
       let(:facts) do
-        { :osfamily               => 'RedHat',
-          :operatingsystemrelease => '6.4',
-          :operatingsystemmajrelease  => '6',
+        { :osfamily                  => 'RedHat',
+          :operatingsystemrelease    => '6.4',
+          :operatingsystemmajrelease => '6',
         }
       end
 
@@ -218,47 +204,14 @@ kalle is king hallelulja})
       }
 
       it { should_not contain_file('path_fix') }
-
     end
 
-    context 'on RedHat < 6.4 (5.2)' do
-      let(:params) { { :cgconfig_content => 'kalle is king hallelulja' } }
-      let(:facts) do
-        { :osfamily               => 'RedHat',
-          :operatingsystemrelease => '5.2',
-          :operatingsystemmajrelease  => '5',
-        }
-      end
-
-      it 'should fail' do
-        expect {
-          should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
-      end
-
-    end
-    context 'on RedHat > 6.4 (7.0)' do
-      let(:params) { { :cgconfig_content => 'kalle is king hallelulja' } }
-      let(:facts) do
-        { :osfamily               => 'RedHat',
-          :operatingsystemrelease => '7.0',
-          :operatingsystemmajrelease  => '7',
-        }
-      end
-
-      it 'should fail' do
-        expect {
-          should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
-      end
-
-    end
     context 'On Suse 11.2' do
       let(:params) { { :cgconfig_content => 'kalle is king hallelulja' } }
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '11.2',
-          :lsbmajdistrelease  => '11',
+          :lsbmajdistrelease      => '11',
         }
       end
 
@@ -278,21 +231,6 @@ kalle is king hallelulja})
 
       it { should_not contain_file('path_fix') }
 
-    end
-    context 'on Suse < 11.2 (11.1)' do
-      let(:params) { { :cgconfig_content => 'kalle is king hallelulja' } }
-      let(:facts) do
-        { :osfamily               => 'Suse',
-          :operatingsystemrelease => '11.1',
-          :lsbmajdistrelease  => '11',
-        }
-      end
-
-      it 'should fail' do
-        expect {
-          should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and up./)
-      end
     end
 
     context 'on Suse > 11.2 (12.1)' do
@@ -300,7 +238,7 @@ kalle is king hallelulja})
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '12.1',
-          :lsbmajdistrelease  => '11',
+          :lsbmajdistrelease      => '11',
         }
       end
 
@@ -319,50 +257,16 @@ kalle is king hallelulja})
       }
 
       it { should_not contain_file('path_fix') }
-
     end
-
   end
 
   describe 'and with user_path_fix specified' do
-    context 'on RedHat < 6.4 (5.2)' do
-      let(:params) { { :user_path_fix => '/kalle' } }
-      let(:facts) do
-        { :osfamily               => 'RedHat',
-          :operatingsystemrelease => '5.2',
-          :operatingsystemmajrelease  => '5',
-        }
-      end
-
-      it 'should fail' do
-        expect {
-          should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
-      end
-    end
-
-    context 'on RedHat > 6.4 (7.0)' do
-      let(:params) { { :user_path_fix => '/kalle' } }
-      let(:facts) do
-        { :osfamily               => 'RedHat',
-          :operatingsystemrelease => '7.0',
-          :operatingsystemmajrelease  => '7',
-        }
-      end
-
-      it 'should fail' do
-        expect {
-          should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
-      end
-    end
-
     context 'on RedHat 6.4' do
       let(:params) { { :user_path_fix => '/kalle' } }
       let(:facts) do
-        { :osfamily               => 'RedHat',
-          :operatingsystemrelease => '6.4',
-          :operatingsystemmajrelease  => '6',
+        { :osfamily                  => 'RedHat',
+          :operatingsystemrelease    => '6.4',
+          :operatingsystemmajrelease => '6',
         }
       end
 
@@ -371,53 +275,17 @@ kalle is king hallelulja})
       it { should_not contain_file('path_fix') }
     end
 
-
-    context 'on Suse < 11.2 (11.1)' do
-      let(:params) { { :user_path_fix    => '/kalle' } }
-      let(:facts) do
-        { :osfamily               => 'Suse',
-          :operatingsystemrelease => '11.1',
-          :lsbmajdistrelease  => '11',
-        }
-      end
-
-      it 'should fail' do
-        expect {
-          should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and up./)
-      end
-
-    end
-
-    context 'on Suse > 11.2 (11.4)' do
-      let(:params) { { :user_path_fix    => '/kalle' } }
-      let(:facts) do
-        { :osfamily               => 'Suse',
-          :operatingsystemrelease => '11.4',
-          :lsbmajdistrelease  => '11',
-        }
-      it { should compile.with_all_deps }
-      it {
-        should contain_file('path_fix').with({
-        'ensure'  => 'directory',
-        'path'    => '/kalle',
-        'mode'    => '0775',
-        'require' => 'Service[cgconfig_service]',
-        })
-      }
-      end
-    end
-
     context 'On Suse 11.2' do
-      let(:params) { { :user_path_fix    => '/kalle' } }
+      let(:params) { { :user_path_fix => '/kalle' } }
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '11.2',
-          :lsbmajdistrelease  => '11',
+          :lsbmajdistrelease      => '11',
         }
       end
 
       it { should compile.with_all_deps }
+
       it {
         should contain_file('path_fix').with({
         'ensure'  => 'directory',
