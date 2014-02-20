@@ -7,5 +7,4 @@ summary 'manage cgroups functionality'
 description 'manages cgroups configfile and cgroups service'
 project_page 'https://github.com/Ericsson/puppet-module-cgroups'
 
-## Add dependencies, if any:
 dependency 'puppetlabs/stdlib', '>= 3.2.0'

@@ -61,7 +61,7 @@ mount {
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on RHEL 6/)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
       end
 
     end
@@ -77,7 +77,7 @@ mount {
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on RHEL 6/)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
       end
     end
 
@@ -140,7 +140,7 @@ mount {
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and upward/)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and up./)
       end
     end
 
@@ -233,7 +233,7 @@ kalle is king hallelulja})
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on RHEL 6/)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
       end
 
     end
@@ -249,7 +249,7 @@ kalle is king hallelulja})
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on RHEL 6/)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
       end
 
     end
@@ -291,7 +291,7 @@ kalle is king hallelulja})
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and upward/)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and up./)
       end
     end
 
@@ -337,7 +337,7 @@ kalle is king hallelulja})
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on RHEL 6/)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
       end
     end
 
@@ -353,7 +353,7 @@ kalle is king hallelulja})
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on RHEL 6/)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on EL 6./)
       end
     end
 
@@ -384,7 +384,7 @@ kalle is king hallelulja})
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and upward/)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and up./)
       end
 
     end

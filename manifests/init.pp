@@ -1,5 +1,5 @@
 # == Class: cgroups
-
+#
 class cgroups (
   $config_file_path = '/etc/cgconfig.conf',
   $service_name     = 'cgconfig',
@@ -17,7 +17,7 @@ class cgroups (
           $default_cgconfig_mount = '/cgroup'
         }
         default: {
-          fail('cgroups is only supported on RHEL 6')
+          fail('cgroups is only supported on EL 6.')
         }
       }
     }
@@ -38,16 +38,16 @@ class cgroups (
             }
           }
           else {
-            fail('cgroups is only supported on Suse 11.2 and upward')
+            fail('cgroups is only supported on Suse 11.2 and up.')
           }
         }
         default: {
-          fail('cgroups is only supported on Suse 11 (11.2 and up')
+          fail('cgroups is only supported on Suse 11.2 and up.')
         }
       }
     }
     default: {
-      fail('cgroups is not supported on this platform')
+      fail('cgroups is not supported on this platform.')
     }
   }
 
