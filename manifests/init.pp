@@ -9,6 +9,16 @@ class cgroups (
   $user_path_fix    = false,
 ) {
 
+  validate_absolute_path($config_file_path)
+
+  if type($service_name) != 'string' {
+    fail('cgroups::service_name must be a string.')
+  }
+
+  if type($package_name) != 'string' and type($package_name) != 'array' {
+    fail('cgroups::package_name must be a string or an array.')
+  }
+
   case $::osfamily {
     'RedHat': {
       case $::operatingsystemmajrelease {
@@ -29,7 +39,7 @@ class cgroups (
             $default_cgconfig_mount = '/sys/fs/cgroup'
 
             if $user_path_fix {
-              file { 'path_fix':
+              file { 'cgroups_path_fix':
                 ensure  => directory,
                 path    => $user_path_fix,
                 mode    => '0775',
@@ -52,18 +62,19 @@ class cgroups (
   }
 
   if $package_name == 'USE_DEFAULTS' {
-    $real_package_name = $default_package_name
+    $package_name_real = $default_package_name
   } else {
-    $real_package_name = $package_name
+    $package_name_real = $package_name
   }
 
   if $cgconfig_mount == 'USE_DEFAULTS' {
-    $real_cgconfig_mount = $default_cgconfig_mount
+    $cgconfig_mount_real = $default_cgconfig_mount
   } else {
-    $real_cgconfig_mount = $cgconfig_mount
+    $cgconfig_mount_real = $cgconfig_mount
   }
+  validate_absolute_path($cgconfig_mount_real)
 
-  package { $real_package_name:
+  package { $package_name_real:
     ensure => present,
   }
 
@@ -72,13 +83,13 @@ class cgroups (
     notify  => Service['cgconfig_service'],
     path    => $config_file_path,
     content => template('cgroups/cgroup.conf.erb'),
-    require => Package[$real_package_name],
+    require => Package[$package_name_real],
   }
 
   service { 'cgconfig_service':
     ensure  => running,
     enable  => true,
     name    => $service_name,
-    require => Package[$real_package_name],
+    require => Package[$package_name_real],
   }
 }

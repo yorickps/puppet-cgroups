@@ -37,13 +37,13 @@ mount {
 })
       }
 
-      it { should_not contain_file('path_fix') }
+      it { should_not contain_file('cgroups_path_fix') }
 
       it {
         should contain_service('cgconfig_service').with({
           'ensure'  => 'running',
-          'enable'    => 'true',
-          'name'  => 'cgconfig',
+          'enable'  => 'true',
+          'name'    => 'cgconfig',
           'require' => 'Package[libcgroup]',
         })
       }
@@ -103,7 +103,7 @@ mount {
 })
       }
 
-      it { should_not contain_file('path_fix') }
+      it { should_not contain_file('cgroups_path_fix') }
 
       it {
         should contain_service('cgconfig_service').with({
@@ -166,7 +166,7 @@ mount {
 })
       }
 
-      it { should_not contain_file('path_fix') }
+      it { should_not contain_file('cgroups_path_fix') }
 
       it {
         should contain_service('cgconfig_service').with({
@@ -203,7 +203,7 @@ mount {
 kalle is king hallelulja})
       }
 
-      it { should_not contain_file('path_fix') }
+      it { should_not contain_file('cgroups_path_fix') }
     end
 
     context 'On Suse 11.2' do
@@ -229,7 +229,7 @@ mount {
 kalle is king hallelulja})
       }
 
-      it { should_not contain_file('path_fix') }
+      it { should_not contain_file('cgroups_path_fix') }
 
     end
 
@@ -256,7 +256,7 @@ mount {
 kalle is king hallelulja})
       }
 
-      it { should_not contain_file('path_fix') }
+      it { should_not contain_file('cgroups_path_fix') }
     end
   end
 
@@ -272,7 +272,7 @@ kalle is king hallelulja})
 
       it { should compile.with_all_deps }
 
-      it { should_not contain_file('path_fix') }
+      it { should_not contain_file('cgroups_path_fix') }
     end
 
     context 'On Suse 11.2' do
@@ -287,13 +287,197 @@ kalle is king hallelulja})
       it { should compile.with_all_deps }
 
       it {
-        should contain_file('path_fix').with({
+        should contain_file('cgroups_path_fix').with({
         'ensure'  => 'directory',
         'path'    => '/kalle',
         'mode'    => '0775',
         'require' => 'Service[cgconfig_service]',
         })
       }
+    end
+  end
+
+  describe 'with config_file_path parameter specified' do
+    context 'as a valid path' do
+      let(:params) { { :config_file_path => '/usr/local/etc/cgconfig.conf' } }
+      let(:facts) do
+        { :osfamily                  => 'RedHat',
+          :operatingsystemmajrelease => '6',
+        }
+      end
+
+      it { should compile.with_all_deps }
+
+      it {
+        should contain_file('cg_conf').with({
+          'ensure'  => 'file',
+          'path'    => '/usr/local/etc/cgconfig.conf',
+          'notify'  => 'Service[cgconfig_service]',
+          'require' => 'Package[libcgroup]',
+        })
+      }
+    end
+
+    context 'as an invalid path' do
+      let(:params) { { :config_file_path => 'invalid/path' } }
+      let(:facts) do
+        { :osfamily                  => 'RedHat',
+          :operatingsystemmajrelease => '6',
+        }
+      end
+
+      it 'should fail' do
+        expect {
+          should contain_class('cgroups')
+        }.to raise_error(Puppet::Error)
+      end
+    end
+  end
+
+  describe 'with service_name parameter specified' do
+    context 'as a string' do
+      let(:params) { { :service_name => 'mycgconfig' } }
+      let(:facts) do
+        { :osfamily                  => 'RedHat',
+          :operatingsystemmajrelease => '6',
+        }
+      end
+
+      it { should compile.with_all_deps }
+
+      it {
+        should contain_service('cgconfig_service').with({
+          'ensure'  => 'running',
+          'enable'  => 'true',
+          'name'    => 'mycgconfig',
+          'require' => 'Package[libcgroup]',
+        })
+      }
+    end
+
+    context 'as an invalid type' do
+      let(:params) { { :service_name => ['invalid','type'] } }
+      let(:facts) do
+        { :osfamily                  => 'RedHat',
+          :operatingsystemmajrelease => '6',
+        }
+      end
+
+      it 'should fail' do
+        expect {
+          should contain_class('cgroups')
+        }.to raise_error(Puppet::Error,/cgroups::service_name must be a string./)
+      end
+    end
+  end
+
+  describe 'with package_name parameter specified' do
+    context 'as a string' do
+      let(:params) { { :package_name => 'mylibcgroup' } }
+      let(:facts) do
+        { :osfamily                  => 'RedHat',
+          :operatingsystemmajrelease => '6',
+        }
+      end
+
+      it { should compile.with_all_deps }
+
+      it {
+        should contain_package('mylibcgroup').with({
+          'ensure' => 'present',
+        })
+      }
+
+      it {
+        should contain_file('cg_conf').with({
+          'require' => 'Package[mylibcgroup]',
+        })
+      }
+
+      it {
+        should contain_service('cgconfig_service').with({
+          'require' => 'Package[mylibcgroup]',
+        })
+      }
+    end
+
+    context 'as an array' do
+      let(:params) { { :package_name => ['cgrouptools','libcgroup'] } }
+      let(:facts) do
+        { :osfamily                  => 'RedHat',
+          :operatingsystemmajrelease => '6',
+        }
+      end
+
+      it { should compile.with_all_deps }
+
+      it {
+        should contain_package('cgrouptools').with({
+          'ensure' => 'present',
+        })
+      }
+
+      it {
+        should contain_package('libcgroup').with({
+          'ensure' => 'present',
+        })
+      }
+
+      it {
+        should contain_file('cg_conf').with({
+          'require' => [ 'Package[cgrouptools]', 'Package[libcgroup]' ],
+        })
+      }
+
+      it {
+        should contain_service('cgconfig_service').with({
+          'require' => [ 'Package[cgrouptools]', 'Package[libcgroup]' ],
+        })
+      }
+    end
+
+    context 'as an invalid type' do
+      let(:params) { { :package_name => true } }
+      let(:facts) do
+        { :osfamily                  => 'RedHat',
+          :operatingsystemmajrelease => '6',
+        }
+      end
+
+      it 'should fail' do
+        expect {
+          should contain_class('cgroups')
+        }.to raise_error(Puppet::Error,/cgroups::package_name must be a string or an array./)
+      end
+    end
+  end
+
+  describe 'with cgconfig_mount parameter specified' do
+    context 'as a valid path' do
+      let(:params) { { :cgconfig_mount => '/tmp/cgroup' } }
+      let(:facts) do
+        { :osfamily                  => 'RedHat',
+          :operatingsystemmajrelease => '6',
+        }
+      end
+
+      it { should compile.with_all_deps }
+
+    end
+
+    context 'as an invalid path' do
+      let(:params) { { :cgconfig_mount => 'invalid/path' } }
+      let(:facts) do
+        { :osfamily                  => 'RedHat',
+          :operatingsystemmajrelease => '6',
+        }
+      end
+
+      it 'should fail' do
+        expect {
+          should contain_class('cgroups')
+        }.to raise_error(Puppet::Error)
+      end
     end
   end
 end
