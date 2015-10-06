@@ -11,11 +11,11 @@ class cgroups (
 
   validate_absolute_path($config_file_path)
 
-  if type($service_name) != 'string' {
+  if type3x($service_name) != 'string' {
     fail('cgroups::service_name must be a string.')
   }
 
-  if type($package_name) != 'string' and type($package_name) != 'array' {
+  if type3x($package_name) != 'string' and type3x($package_name) != 'array' {
     fail('cgroups::package_name must be a string or an array.')
   }
 
