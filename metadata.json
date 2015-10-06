@@ -1,0 +1,43 @@
+{
+  "name":         "ericsson-cgroups",
+  "version":      "1.0.0",
+  "author":       "ericsson",
+  "summary":      "manage cgroups functionality",
+  "description":  "manage cgroups configfile and cgroups service",
+  "license":      "Apache-2.0",
+  "source":       "https://github.com/Ericsson/puppet-module-cgroups.git",
+  "project_page": "https://github.com/Ericsson/puppet-module-cgroups",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "SLED",
+      "operatingsystemrelease": [
+        "11 SP2"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": ">= 3.2.0 < 5.0.0"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.0.0 < 5.0.0"
+    }
+  ],
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0 < 6.0.0"}
+  ]
+}
