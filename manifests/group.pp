@@ -4,15 +4,13 @@ define cgroups::group (
   $target      = undef,
 ) {
 
-
-
   $fscompat_name = regsubst($name, '\/', '-')
 
   validate_hash($permissions)
   validate_hash($controllers)
 
   include ::cgroups
-  
+
   if $target {
     $target_real = $target
   } else {
@@ -26,6 +24,4 @@ define cgroups::group (
     content => template('cgroups/group.conf.erb'),
     notify  => Service[$cgroups::service_name],
   }
-
 }
-
