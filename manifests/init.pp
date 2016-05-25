@@ -30,7 +30,6 @@ class cgroups (
       case $::operatingsystemmajrelease {
         '6','7': {
           $default_package_name   = 'libcgroup'
-          $default_cgconfig_mount = '/cgroup'
         }
         default: {
           fail('cgroups is only supported on EL 6 and 7.')
@@ -42,7 +41,6 @@ class cgroups (
         '11': {
           if versioncmp($::operatingsystemrelease, '11.2') > -1 {
             $default_package_name   = 'libcgroup1'
-            $default_cgconfig_mount = '/sys/fs/cgroup'
 
             if $user_path_fix {
               file { 'cgroups_path_fix':
