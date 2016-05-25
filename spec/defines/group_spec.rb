@@ -38,19 +38,19 @@ describe 'cgroups::group' do
       should contain_file('/etc/cgconfig.d/user-mgw-all.conf').with_content(
 %{group user/mgw-all {
   perm {
-    task  {
-      uid = root;
-      gid = mgw-all;
-    }
     admin  {
-      uid = root;
       gid = mgw-all;
+      uid = root;
+    }
+    task  {
+      gid = mgw-all;
+      uid = root;
     }
   }
 
   cpu {
-    cpuset.mems = 0;
     cpuset.cpus = 0,1;
+    cpuset.mems = 0;
   }
 
 }

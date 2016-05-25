@@ -1,9 +1,9 @@
 group <%= @name %> {
 <% unless @permissions.empty? -%>
   perm {
-<%   @permissions.each do |type, params| -%>
+<%   @permissions.sort.each do |type, params| -%>
     <%= type %>  {
-<%     params.each do |p,v| -%>
+<%     params.sort.each do |p,v| -%>
       <%= p %> = <%= v %>;
 <%     end -%>
     }
@@ -11,9 +11,9 @@ group <%= @name %> {
   }
 <% end -%>
 
-<% @controllers.each do |controller, params| -%>
+<% @controllers.sort.each do |controller, params| -%>
   <%= controller %> {
-<%   params.each do |p,v| -%>
+<%   params.sort.each do |p,v| -%>
     <%= p %> = <%= v %>;
 <%   end -%>
   }

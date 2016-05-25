@@ -3,7 +3,7 @@
 
 <% unless @mounts.empty? -%>
 mount {
-<%   @mounts.each do |p,v| -%>
+<%   @mounts.sort.each do |p,v| -%>
   <%= p %> = <%= v %>;
 <%   end -%>
 }
