@@ -5,7 +5,7 @@ class cgroups (
   $service_name     = 'cgconfig',
   $package_name     = undef,
   $cgconfig_content = undef,
-  $user_path_fix    = false,
+  $user_path_fix    = undef,
   $mounts           = {},
   $groups           = {},
 ) {
@@ -18,6 +18,10 @@ class cgroups (
 
   if type3x($package_name) != 'string' and type3x($package_name) != 'array' {
     fail('cgroups::package_name must be a string or an array.')
+  }
+
+  if $user_path_fix != undef {
+    validate_absolute_path($user_path_fix)
   }
 
   validate_hash($mounts)
@@ -37,25 +41,11 @@ class cgroups (
     }
     'Suse': {
       case $::operatingsystemrelease {
-        /11\.\d/: {
-          if versioncmp($::operatingsystemrelease, '11.2') > -1 {
-            $default_package_name   = 'libcgroup1'
-
-            if $user_path_fix {
-              file { 'cgroups_path_fix':
-                ensure  => directory,
-                path    => $user_path_fix,
-                mode    => '0775',
-                require => Service[$service_name],
-              }
-            }
-          }
-          else {
-            fail('cgroups is only supported on Suse 11.2 and up.')
-          }
+        /11\.[2-9]/: {
+          $default_package_name   = 'libcgroup1'
         }
         default: {
-          fail('cgroups is only supported on Suse 11.2 and up.')
+          fail('cgroups is only supported on Suse 11 with SP2 and up.')
         }
       }
     }
@@ -87,5 +77,14 @@ class cgroups (
     ensure  => running,
     enable  => true,
     require => Package[$package_name_real],
+  }
+
+  if ($user_path_fix != undef) and ($::osfamily == 'Suse') {
+    file { 'cgroups_path_fix':
+      ensure  => directory,
+      path    => $user_path_fix,
+      mode    => '0775',
+      require => Service[$service_name],
+    }
   }
 }

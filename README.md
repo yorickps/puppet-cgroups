@@ -78,11 +78,11 @@ Optional, specify arbitary content for the cgconfig.conf file
 
 - *Default*: undef
 
-user_path_fix
--------------
-A path to set 0775 permissions on. This is a fix for Suse that have a bug in setting this though the config file.
+user_path_fix (string)
+----------------------
+A path to set 0775 permissions on when defined. This is a fix for Suse that have a bug in setting this though the config file.
 
-- *Default*: ''
+- *Default*: undef
 
 # Heira example with Suse 11.2 bugfix
 

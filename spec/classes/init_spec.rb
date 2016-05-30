@@ -108,7 +108,7 @@ describe 'cgroups' do
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and up./)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11 with SP2 and up/)
       end
     end
 
@@ -160,7 +160,7 @@ describe 'cgroups' do
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and up./)
+        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11 with SP2 and up/)
       end
     end
   end
