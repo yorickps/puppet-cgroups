@@ -20,6 +20,10 @@ class cgroups (
     fail('cgroups::package_name must be a string or an array.')
   }
 
+  if is_string($cgconfig_content) == false {
+    fail('cgroups::cgconfig_content is not a string')
+  }
+
   if $user_path_fix != undef {
     validate_absolute_path($user_path_fix)
   }
