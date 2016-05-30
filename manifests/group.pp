@@ -4,13 +4,16 @@ define cgroups::group (
   $target_path = '/etc/cgconfig.d',
 ) {
 
+  # variables preparation
   $fscompat_name = regsubst($name, '\/', '-')
   $target = "${target_path}/${fscompat_name}.conf"
 
+  # variables validation
   validate_hash($permissions)
   validate_hash($controllers)
   validate_absolute_path($target)
 
+  # functionality
   include ::cgroups
 
   file { $target:

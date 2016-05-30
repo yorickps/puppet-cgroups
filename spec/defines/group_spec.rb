@@ -1,8 +1,6 @@
 require 'spec_helper'
-
-
 describe 'cgroups::group' do
-  
+
   let (:title) { 'user/mgw-all' }
   let(:facts) do
     { :osfamily                  => 'RedHat',
