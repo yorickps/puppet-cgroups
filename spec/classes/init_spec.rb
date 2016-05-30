@@ -29,8 +29,6 @@ describe 'cgroups' do
         should contain_file('/etc/cgconfig.conf').with_content(
 %{# This file is being maintained by Puppet.
 # DO NOT EDIT
-
-
 })
       }
 
@@ -207,7 +205,8 @@ mount {
   cpu = /sys/fs/cgroup;
 }
 
-kalle is king hallelulja})
+kalle is king hallelulja
+})
       }
 
       it { should_not contain_file('cgroups_path_fix') }
