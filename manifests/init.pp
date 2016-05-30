@@ -45,16 +45,16 @@ class cgroups (
   # variables validation
   validate_absolute_path($config_file_path)
 
-  if type3x($service_name) != 'string' {
-    fail('cgroups::service_name must be a string.')
+  if is_string($service_name) == false {
+    fail('cgroups::service_name is not a string.')
   }
 
-  if type3x($package_name_real) != 'string' and type3x($package_name_real) != 'array' {
-    fail('cgroups::package_name must be a string or an array.')
+  if is_string($package_name_real) == false and is_array($package_name_real) == false {
+    fail('cgroups::package_name is not a string or an array.')
   }
 
   if is_string($cgconfig_content) == false {
-    fail('cgroups::cgconfig_content is not a string')
+    fail('cgroups::cgconfig_content is not a string.')
   }
 
   if $user_path_fix != undef {

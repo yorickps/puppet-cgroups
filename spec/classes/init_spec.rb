@@ -317,7 +317,7 @@ kalle is king hallelulja
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups::service_name must be a string./)
+        }.to raise_error(Puppet::Error,/cgroups::service_name is not a string./)
       end
     end
   end
@@ -398,7 +398,7 @@ kalle is king hallelulja
       it 'should fail' do
         expect {
           should contain_class('cgroups')
-        }.to raise_error(Puppet::Error,/cgroups::package_name must be a string or an array./)
+        }.to raise_error(Puppet::Error,/cgroups::package_name is not a string or an array./)
       end
     end
   end
