@@ -80,7 +80,7 @@ Optional, specify arbitary content for the cgconfig.conf file
 
 user_path_fix
 -------------
-A path to set 0777 permissions on. This is a fix for Suse that have a bug in setting this though the config file.
+A path to set 0775 permissions on. This is a fix for Suse that have a bug in setting this though the config file.
 
 - *Default*: ''
 
