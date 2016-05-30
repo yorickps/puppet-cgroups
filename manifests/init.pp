@@ -2,7 +2,6 @@
 #
 class cgroups (
   $config_file_path = '/etc/cgconfig.conf',
-  $config_d_path    = '/etc/cgconfig.d',
   $service_name     = 'cgconfig',
   $package_name     = undef,
   $cgconfig_content = undef,

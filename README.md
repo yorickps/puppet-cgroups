@@ -25,13 +25,6 @@ Path to cgroups config file.
 
 - *Default*: '/etc/cgconfig.conf'
 
-config_d_path
--------------
-Path to the .d configuration directory
-
-- *Default*: '/etc/cgconfig.d'
-
-
 service_name
 ------------
 name of service.
@@ -152,10 +145,10 @@ Eg
   }
 ```
 
-target
-------
+target_path (string)
+--------------------
 
-Optional parameter to define where the configuration should be put.  By default the module will use the /etc/cgconfig.d directory
+Optional parameter to define in which path the configuration file should be put. By default the module will use the /etc/cgconfig.d directory.
 
 ## Full example
 
