@@ -67,7 +67,6 @@ describe 'cgroups' do
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '11.2',
-          :lsbmajdistrelease      => '11',
         }
       end
 
@@ -105,7 +104,6 @@ describe 'cgroups' do
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '11.1',
-          :lsbmajdistrelease      => '11',
         }
       end
 
@@ -120,7 +118,6 @@ describe 'cgroups' do
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '11.3',
-          :lsbmajdistrelease      => '11',
         }
       end
 
@@ -153,6 +150,21 @@ describe 'cgroups' do
         })
       }
     end
+
+    context 'on Suse 12' do
+      let(:facts) do
+        {
+          :osfamily               => 'Suse',
+          :operatingsystemrelease => '12.0',
+        }
+      end
+
+      it 'should fail' do
+        expect {
+          should contain_class('cgroups')
+        }.to raise_error(Puppet::Error,/cgroups is only supported on Suse 11.2 and up./)
+      end
+    end
   end
 
   describe 'with cgconfig_content parameter specified' do
@@ -181,7 +193,6 @@ describe 'cgroups' do
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '11.2',
-          :lsbmajdistrelease      => '11',
         }
       end
 
@@ -201,29 +212,6 @@ kalle is king hallelulja})
 
       it { should_not contain_file('cgroups_path_fix') }
 
-    end
-
-    context 'on Suse > 11.2 (12.1)' do
-      let(:params) { { :cgconfig_content => 'kalle is king hallelulja' } }
-      let(:facts) do
-        { :osfamily               => 'Suse',
-          :operatingsystemrelease => '12.1',
-          :lsbmajdistrelease      => '11',
-        }
-      end
-
-      it { should compile.with_all_deps }
-
-      it {
-        should contain_file('/etc/cgconfig.conf').with_content(
-%{# This file is being maintained by Puppet.
-# DO NOT EDIT
-
-
-kalle is king hallelulja})
-      }
-
-      it { should_not contain_file('cgroups_path_fix') }
     end
   end
 
@@ -247,7 +235,6 @@ kalle is king hallelulja})
       let(:facts) do
         { :osfamily               => 'Suse',
           :operatingsystemrelease => '11.2',
-          :lsbmajdistrelease      => '11',
         }
       end
 

@@ -37,8 +37,8 @@ class cgroups (
       }
     }
     'Suse': {
-      case $::lsbmajdistrelease {
-        '11': {
+      case $::operatingsystemrelease {
+        /11\.\d/: {
           if versioncmp($::operatingsystemrelease, '11.2') > -1 {
             $default_package_name   = 'libcgroup1'
 
