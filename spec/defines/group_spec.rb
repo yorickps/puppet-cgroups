@@ -10,8 +10,10 @@ describe 'cgroups::group' do
   end
   context 'with defaults for all parameters' do
     content = <<-END.gsub(/^\s+\|/, '')
-      |group rspec/test {
+      |# This file is being maintained by Puppet.
+      |# DO NOT EDIT
       |
+      |group rspec/test {
       |
       |}
     END
@@ -50,7 +52,11 @@ describe 'cgroups::group' do
     end
     # test includes alphabetical sorting of values in the template
     content = <<-END.gsub(/^\s+\|/, '')
+      |# This file is being maintained by Puppet.
+      |# DO NOT EDIT
+      |
       |group rspec/test {
+      |
       |  perm {
       |    admin  {
       |      gid = mgw-all;
@@ -91,14 +97,17 @@ describe 'cgroups::group' do
       }
     end
     content = <<-END.gsub(/^\s+\|/, '')
+      |# This file is being maintained by Puppet.
+      |# DO NOT EDIT
+      |
       |group rspec/test {
+      |
       |  perm {
       |    rspec  {
       |      gid = test;
       |      uid = rpsec;
       |    }
       |  }
-      |
       |
       |}
     END
@@ -118,6 +127,9 @@ describe 'cgroups::group' do
       }
     end
     content = <<-END.gsub(/^\s+\|/, '')
+      |# This file is being maintained by Puppet.
+      |# DO NOT EDIT
+      |
       |group rspec/test {
       |
       |  cpu {
