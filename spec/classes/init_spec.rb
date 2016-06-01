@@ -34,22 +34,22 @@ describe 'cgroups' do
     it { should_not contain_file('cgroups_path_fix') }
     it { should have_cgroups__group_resource_count(0) }
     it { should contain_package('libcgroup').with_ensure('present') }
-    it {
+    it do
       should contain_file('/etc/cgconfig.conf').with({
         'ensure'  => 'file',
         'notify'  => 'Service[cgconfig]',
         'require' => 'Package[libcgroup]',
         'content' => content,
       })
-    }
+    end
 
-    it {
+    it do
       should contain_service('cgconfig').with({
         'ensure'  => 'running',
         'enable'  => 'true',
         'require' => 'Package[libcgroup]',
       })
-    }
+    end
   end
 
   describe 'with config_file_path set to valid string </specific/path>' do
@@ -78,7 +78,7 @@ describe 'cgroups' do
     it { should contain_service('other_name') }
   end
 
-  platforms.sort.each do |platform,v|
+  platforms.sort.each do |platform, v|
     describe "with package_name default value on osfamily <#{platform}>" do
       let(:facts) do
         {
@@ -142,7 +142,7 @@ describe 'cgroups' do
   end
 
   describe 'with mounts set to valid hash { spec => /test, cpu => /cgroups }' do
-    let(:params) { { :mounts => { 'spec' => '/test' , 'cpu' => '/cgroup' } } }
+    let(:params) { { :mounts => { 'spec' => '/test', 'cpu' => '/cgroup' } } }
     # test includes alphabetical sorting of values in the template
     content = <<-END.gsub(/^\s+\|/, '')
       |# This file is being maintained by Puppet.
@@ -156,41 +156,43 @@ describe 'cgroups' do
 
     it { should contain_file('/etc/cgconfig.conf').with_content(content) }
   end
-=begin
+
   describe 'with groups set to valid hash' do
-    let (:params) { {
-      :groups => {
-        'user/mgw-all' => {
-          'permissions' => {
-            'task' => {
-              'uid' => 'root',
-              'gid' => 'mgw-all'
+    let(:params) do
+      {
+        :groups => {
+          'user/mgw-all' => {
+            'permissions' => {
+              'task' => {
+                'uid' => 'root',
+                'gid' => 'mgw-all'
+              },
+              'admin' => {
+                'uid' => 'root',
+                'gid' => 'mgw-all'
+              }
             },
-            'admin' => {
-              'uid' => 'root',
-              'gid' => 'mgw-all'
+            'controllers' => {
+              'cpu' => {
+                'cpuset.mems' => '0',
+                'cpuset.cpus' => '0,1'
+              }
             }
           },
-          'controllers' => {
-            'cpu' => {
-              'cpuset.mems' => '0',
-              'cpuset.cpus' => '0,1'
-            }
-          }
-        },
-        'spec/test' => {
-          'permissions' => {
-            'spec' => {
-              'uid' => 'root',
-              'gid' => 'test'
-            }
+          'spec/test' => {
+            'permissions' => {
+              'spec' => {
+                'uid' => 'root',
+                'gid' => 'test'
+              }
+            },
           },
         },
       }
-    }}
+    end
 
     it { should have_cgroups__group_resource_count(2) }
-    it {
+    it do
       should contain_cgroups__group('user/mgw-all').with({
         'permissions' => {
           'task' => {
@@ -209,9 +211,9 @@ describe 'cgroups' do
           }
         }
       })
-    }
+    end
 
-    it {
+    it do
       should contain_cgroups__group('spec/test').with({
         'permissions' => {
           'spec' => {
@@ -220,12 +222,10 @@ describe 'cgroups' do
           },
         },
       })
-    }
+    end
   end
 
-
-
-  ['5','8'].each do |release|
+  %w(5 8).each do |release|
     context "on EL #{release}" do
       let(:facts) do
         {
@@ -241,11 +241,11 @@ describe 'cgroups' do
     end
   end
 
-  ['10','11.0','11.1','12'].each do |release|
+  %w(10 11.0 11.1 12).each do |release|
     context "on Suse #{release}" do
       let(:facts) do
         {
-          :operatingsystemrelease => "#{release}",
+          :operatingsystemrelease => release,
           :osfamily               => 'Suse',
         }
       end
@@ -256,7 +256,7 @@ describe 'cgroups' do
     end
   end
 
-  context "on unknown OS WeirdOS" do
+  context 'on unknown OS WeirdOS' do
     let(:facts) { { :osfamily => 'WeirdOS' } }
 
     it 'should fail' do
@@ -327,5 +327,4 @@ describe 'cgroups' do
       end # var[:name].each
     end # validations.sort.each
   end # describe 'variable type and content validations'
-=end
 end
