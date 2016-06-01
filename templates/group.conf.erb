@@ -1,0 +1,26 @@
+# This file is being maintained by Puppet.
+# DO NOT EDIT
+
+group <%= @name %> {
+<% unless @permissions.empty? -%>
+
+  perm {
+<%   @permissions.sort.each do |type, params| -%>
+    <%= type %>  {
+<%     params.sort.each do |p,v| -%>
+      <%= p %> = <%= v %>;
+<%     end -%>
+    }
+<%  end  -%>
+  }
+<% end -%>
+<% @controllers.sort.each do |controller, params| -%>
+
+  <%= controller %> {
+<%   params.sort.each do |p,v| -%>
+    <%= p %> = <%= v %>;
+<%   end -%>
+  }
+<% end -%>
+
+}

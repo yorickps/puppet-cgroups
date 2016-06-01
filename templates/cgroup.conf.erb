@@ -1,8 +1,14 @@
 # This file is being maintained by Puppet.
 # DO NOT EDIT
+<% unless @mounts.empty? -%>
 
 mount {
-  cpu = <%= @cgconfig_mount_real %>;
+<%   @mounts.sort.each do |p,v| -%>
+  <%= p %> = <%= v %>;
+<%   end -%>
 }
+<% end -%>
+<% unless @cgconfig_content.nil? -%>
 
-<%= @cgconfig_content -%>
+<%= @cgconfig_content %>
+<% end -%>
