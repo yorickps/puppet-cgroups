@@ -2,6 +2,12 @@
 
 Changelog
 
+##2017-02-20 - Release 2.1.0
+Support Puppet up to 4.9 and Ruby 2.3.1
+
+##2016-06-01 - Release 2.0.1
+Add support for RedHat 7
+
 ##2016-05-31 - Release 2.0.0
 ###Breaking News
 
