@@ -1,5 +1,7 @@
 # == Class: cgroups
 #
+# Manage cgroups configuration service and files.
+#
 class cgroups (
   $config_file_path = '/etc/cgconfig.conf',
   $service_name     = 'cgconfig',

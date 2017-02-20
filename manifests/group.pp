@@ -1,3 +1,7 @@
+# == Define: cgroups::group
+#
+# Manage cgroup entries in /etc/cgconfig.d
+#
 define cgroups::group (
   $permissions = {},
   $controllers = {},
