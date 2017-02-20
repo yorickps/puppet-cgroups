@@ -2,6 +2,9 @@
 
 Changelog
 
+##2017-02-20 - Release 2.1.1
+Document class and define to appease Puppetlabs Forge
+
 ##2017-02-20 - Release 2.1.0
 Support Puppet up to 4.9 and Ruby 2.3.1
 
