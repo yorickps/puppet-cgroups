@@ -1,6 +1,6 @@
 {
   "name":         "ericsson-cgroups",
-  "version":      "2.1.2",
+  "version":      "2.1.3",
   "author":       "ericsson",
   "summary":      "manage cgroups functionality",
   "description":  "manage cgroups configfile and cgroups service",

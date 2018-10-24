@@ -2,6 +2,12 @@
 
 Changelog
 
+##2018-10-24 - Release 2.1.3
+Support Puppet 6
+
+##2018-09-26 - Release 2.1.2
+Support Puppet 5
+
 ##2017-02-20 - Release 2.1.1
 Document class and define to appease Puppetlabs Forge
 
