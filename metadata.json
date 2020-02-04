@@ -1,12 +1,17 @@
 {
-  "name":         "ericsson-cgroups",
-  "version":      "2.1.3",
-  "author":       "ericsson",
-  "summary":      "manage cgroups functionality",
-  "description":  "manage cgroups configfile and cgroups service",
-  "license":      "Apache-2.0",
-  "source":       "https://github.com/Ericsson/puppet-module-cgroups.git",
+  "name": "ericsson-cgroups",
+  "version": "2.1.3",
+  "author": "ericsson",
+  "summary": "manage cgroups functionality",
+  "license": "Apache-2.0",
+  "source": "https://github.com/Ericsson/puppet-module-cgroups.git",
   "project_page": "https://github.com/Ericsson/puppet-module-cgroups",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.6.0 < 5.0.0"
+    }
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -35,7 +40,8 @@
       "version_requirement": ">= 3.0.0 < 7.0.0"
     }
   ],
-  "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0 < 5.0.0"}
-  ]
+  "description": "manage cgroups configfile and cgroups service",
+  "pdk-version": "1.14.1",
+  "template-url": "pdk-default#1.14.1",
+  "template-ref": "1.14.1-0-g0b5b39b"
 }
