@@ -26,12 +26,6 @@
         "6",
         "7"
       ]
-    },
-    {
-      "operatingsystem": "SLED",
-      "operatingsystemrelease": [
-        "11 SP2"
-      ]
     }
   ],
   "requirements": [
