@@ -1,1 +1,13 @@
 ---
+cgroups::group::permissions: {}
+cgroups::group::controllers: {}
+cgroups::group::target_path: /etc/cgconfig.d
+cgroups::package_name: libcgroup-tools
+cgroups::service_name: 'cgconfig'
+cgroups::service_enable: true
+cgroups::service_ensure: running
+cgroups::service_manage: true
+cgroups::cgconfig_content: ~
+cgroups::user_path_fix: ~
+cgroups::mounts: {}
+cgroups::groups: {}
