@@ -1,4 +1,5 @@
-# @summary Manage the `cgroups` service
+# @summary 
+#   Manage the cgroups service
 
 class cgroups::service {
 

@@ -1,3 +1,5 @@
+# @summary
+#   This class handles the configuration file.
 #
 class cgroups::config(){
   file { $cgroups::config_file_path:

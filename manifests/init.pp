@@ -1,6 +1,6 @@
-# == Class: cgroups
+# cgroups
 #
-# Manage cgroups configuration service and files.
+# Main class, includes all other classes.
 #
 class cgroups (
   Boolean $service_enable,
