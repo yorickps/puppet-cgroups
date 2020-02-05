@@ -16,8 +16,11 @@ class cgroups (
 ) {
 
   contain ::cgroups::install
+  contain ::cgroups::config
   contain ::cgroups::service
 
-  Class['cgroups::install'] ~> Class['cgroups::service']
+  Class['cgroups::install']
+  -> Class['cgroups::config']
+  ~> Class['cgroups::service']
 
 }
